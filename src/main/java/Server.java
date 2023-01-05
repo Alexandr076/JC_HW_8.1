@@ -9,15 +9,11 @@ public class Server {
     public static void main(String[] args) throws IOException {
         int port = 8081;
         while (true) {
-            try (ServerSocket serverSocket = new ServerSocket(port)) {
-                System.out.println("1");
-                Socket clientSocket = serverSocket.accept();
-                System.out.println("2");
-                PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
-                System.out.println("3");
-                BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-                System.out.println("4");
-
+            try (ServerSocket serverSocket = new ServerSocket(port);
+                 Socket clientSocket = serverSocket.accept();
+                 PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
+                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            ) {
                 System.out.println("New connection accepted");
                 final String name = in.readLine();
                 out.println(String.format("Hi %s, your port is %d", name, clientSocket.getPort()));
